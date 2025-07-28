@@ -26,7 +26,7 @@ class DatabaseManager:
     def __init__(self, db_url: str | None = None):
         self._db_url = db_url or os.getenv("DATABASE_URL")
         if not self._db_url:
-            logging.error("")
+            logging.error("Не задан путь к БД в переменной окружения DATABASE_URL")
             raise DatabaseUrlNotSetError("Не задан путь к БД в переменной окружения DATABASE_URL")
 
     @cached_property

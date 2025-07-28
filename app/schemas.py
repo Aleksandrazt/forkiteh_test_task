@@ -3,6 +3,7 @@
 """
 
 from datetime import datetime
+from decimal import Decimal
 from pydantic import BaseModel
 
 
@@ -20,7 +21,7 @@ class WalletInfoResponse(BaseModel):
     """
 
     wallet_address: str
-    trx_balance: int
+    trx_balance: Decimal
     bandwidth: int
     energy: int
 
@@ -32,7 +33,7 @@ class QueryHistory(BaseModel):
 
     id: int
     wallet_address: str
-    trx_balance: int
+    trx_balance: Decimal
     bandwidth: int
     energy: int
     created_at: datetime
