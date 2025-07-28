@@ -7,9 +7,7 @@ services:
     # вообще на проде вот этого не должен никто видеть но поскольку это все тестовое 
     # задание и хочу сохранить возможность сразу все собрать без настройки 
     # то переменные окружения не скрываю
-    # если будем различать БД для тестов и продато тут поменять строку для подулючения к тестовой бд
-      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
-      - DATABASE_TEST_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
+      - DATABASE_URL=postgres:postgres@db:5432/tron_service
       - TRON_NETWORK=shasta
     depends_on:
       - db
