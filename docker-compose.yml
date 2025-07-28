@@ -10,6 +10,7 @@ services:
     # если будем различать БД для тестов и продато тут поменять строку для подулючения к тестовой бд
       - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
       - DATABASE_TEST_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
+      - TRON_NETWORK=shasta
     depends_on:
       - db
     volumes:
@@ -28,6 +29,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+    # чтобы не терять инфу из бд если контейнер перезапустим
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
