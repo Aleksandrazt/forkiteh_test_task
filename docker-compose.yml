@@ -1,0 +1,34 @@
+services:
+  tron_ms:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+    # вообще на проде вот этого не должен никто видеть но поскольку это все тестовое 
+    # задание и хочу сохранить возможность сразу все собрать без настройки 
+    # то переменные окружения не скрываю
+    # если будем различать БД для тестов и продато тут поменять строку для подулючения к тестовой бд
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
+      - DATABASE_TEST_URL=postgresql+psycopg2://postgres:postgres@db:5432/tron_service
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+  # решила пг использовать как бд но можно поменять
+  # для тестов можно добавить еще test_db но будем 
+  # в данном случае так как самое задание тестовое 
+  # нет необходимости различать тестовое окружение и продуктовое
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=tron_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
