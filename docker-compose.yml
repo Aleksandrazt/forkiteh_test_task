@@ -1,4 +1,16 @@
 services:
+
+  tests:
+    build: .
+    command: pytest
+    environment:
+      - DATABASE_URL=postgres:postgres@db:5432/tron_service
+      - TRON_NETWORK=shasta
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      
   tron_ms:
     build: .
     ports:

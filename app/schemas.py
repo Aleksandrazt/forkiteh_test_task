@@ -4,7 +4,7 @@
 
 from datetime import datetime
 from decimal import Decimal
-from pydantic import BaseModel
+from pydantic import BaseModel, field_serializer
 
 
 class WalletInfoRequest(BaseModel):
