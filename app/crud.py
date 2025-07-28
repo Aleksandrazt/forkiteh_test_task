@@ -2,11 +2,11 @@
 Взаимодействие с БД
 """
 
-from typing import Any
+from typing import Any, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-import models
-import schemas
+from . import models
+from . import schemas
 
 
 def create_wallet_query(
@@ -29,7 +29,7 @@ def create_wallet_query(
 
 def get_query_history(
     db: Session,
-    wallet_address: str | None = None,
+    wallet_address: Optional[str] = None,
     skip: int = 0,
     limit: int = 10,
 ) -> dict[str, Any]:

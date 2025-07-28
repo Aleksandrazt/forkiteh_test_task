@@ -1,10 +1,9 @@
-
 """
 Репозиторий
 """
 import os
 import logging
-from typing import Generator, AsyncGenerator
+from typing import Generator, AsyncGenerator, Optional
 from functools import cached_property
 
 from sqlalchemy import create_engine
@@ -14,7 +13,7 @@ from sqlalchemy.orm import sessionmaker, Session
 
 class DatabaseUrlNotSetError(Exception):
     """
-    Ошибка путого пути к БД
+    Ошибка пустого пути к БД
     """
 
 
@@ -23,7 +22,7 @@ class DatabaseManager:
     Менеджер подключения к базе данных с поддержкой синхронных и асинхронных сессий.
     """
 
-    def __init__(self, db_url: str | None = None):
+    def __init__(self, db_url: Optional[str] = None):
         self._db_url = db_url or os.getenv("DATABASE_URL")
         if not self._db_url:
             logging.error("Не задан путь к БД в переменной окружения DATABASE_URL")
