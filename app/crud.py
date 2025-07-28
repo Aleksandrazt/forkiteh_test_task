@@ -3,10 +3,11 @@
 """
 
 from typing import Any, Optional
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func
-from . import models
-from . import schemas
+from sqlalchemy.orm import Session
+
+from . import models, schemas
 
 
 def create_wallet_query(

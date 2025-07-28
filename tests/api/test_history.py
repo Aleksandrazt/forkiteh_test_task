@@ -6,7 +6,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app import models, crud, schemas
+from app import crud, models, schemas
 
 # тут мокаю базу данных временной in-memory
 SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"

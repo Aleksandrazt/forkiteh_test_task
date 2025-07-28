@@ -1,14 +1,15 @@
 """
 Репозиторий
 """
-import os
+
 import logging
-from typing import Generator, AsyncGenerator, Optional
+import os
 from functools import cached_property
+from typing import AsyncGenerator, Generator, Optional
 
 from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import Session, sessionmaker
 
 
 class DatabaseUrlNotSetError(Exception):
@@ -26,7 +27,9 @@ class DatabaseManager:
         self._db_url = db_url or os.getenv("DATABASE_URL")
         if not self._db_url:
             logging.error("Не задан путь к БД в переменной окружения DATABASE_URL")
-            raise DatabaseUrlNotSetError("Не задан путь к БД в переменной окружения DATABASE_URL")
+            raise DatabaseUrlNotSetError(
+                "Не задан путь к БД в переменной окружения DATABASE_URL"
+            )
 
     @cached_property
     def sync_engine(self):
@@ -46,14 +49,16 @@ class DatabaseManager:
     @cached_property
     def async_session_local(self):
         """Фабрика асинхронных сессий."""
-        return sessionmaker(self.async_engine, class_=AsyncSession, expire_on_commit=False)
+        return sessionmaker(
+            self.async_engine, class_=AsyncSession, expire_on_commit=False
+        )
 
     def get_session(self) -> Generator[Session, None, None]:
-        """Генератор синхронной сессии. Использовать через dependency injection в FastAPI."""
+        """Генератор синхронной сессии"""
         with self.session_local() as session:
             yield session
 
     async def get_async_session(self) -> AsyncGenerator[AsyncSession, None]:
-        """Генератор асинхронной сессии."""
+        """Генератор асинхронной сессии"""
         async with self.async_session_local() as session:
             yield session

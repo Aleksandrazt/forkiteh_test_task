@@ -2,20 +2,19 @@
 Точка входа
 """
 
-from . import crud
-from . import models
-from . import schemas
-from . import tron
-from .database import DatabaseManager
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+
+from . import crud, models, schemas, tron
+from .database import DatabaseManager
 
 db_manager = DatabaseManager()
 
 # вообще было бы лучше асинхронно все и оставила потенциально методы для того
 # но так как в задании не указано, что нужно использовать асинхронный подход,
 # то оставим синхронный подход для простоты и понятности + облегчение миграции
+# а так лучше ассинхронно через алембик
 models.Base.metadata.create_all(bind=db_manager.sync_engine)
 
 app = FastAPI()

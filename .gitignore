@@ -4,3 +4,4 @@ __pycache__
 *.pyc
 __pytest_cache__
 .vscode
+*.code-workspace
