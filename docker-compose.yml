@@ -4,8 +4,8 @@ services:
     build: .
     command: pytest
     environment:
-      - DATABASE_URL=postgres:postgres@db:5432/tron_service
-      - TRON_NETWORK=shasta
+      - DATABASE_URL=${DATABASE_URL}
+      - TRON_NETWORK=${TRON_NETWORK}
     depends_on:
       - db
     volumes:
@@ -19,8 +19,8 @@ services:
     # вообще на проде вот этого не должен никто видеть но поскольку это все тестовое 
     # задание и хочу сохранить возможность сразу все собрать без настройки 
     # то переменные окружения не скрываю
-      - DATABASE_URL=postgres:postgres@db:5432/tron_service
-      - TRON_NETWORK=shasta
+      - DATABASE_URL=${DATABASE_URL}
+      - TRON_NETWORK=${TRON_NETWORK}
     depends_on:
       - db
     volumes:
@@ -33,9 +33,9 @@ services:
   # нет необходимости различать тестовое окружение и продуктовое
     image: postgres:13
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=tron_service
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
