@@ -38,6 +38,7 @@ class QueryHistory(BaseModel):
     bandwidth: int
     energy: int
     created_at: datetime
+    model_config = {"from_attributes": True}
 
 
 class PaginatedQueryHistory(BaseModel):
@@ -49,3 +50,4 @@ class PaginatedQueryHistory(BaseModel):
     total: int
     page: int
     pages: int
+    model_config = {"from_attributes": True}

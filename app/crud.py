@@ -49,6 +49,8 @@ def get_query_history(
         .all()
     )
 
+    items = [schemas.QueryHistory.model_validate(item) for item in items]
+
     return {
         "items": items,
         "total": total,

@@ -4,6 +4,7 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from tronpy.exceptions import BadAddress
 
 from . import crud, models, schemas, tron
 from .database import DatabaseManager
@@ -22,15 +23,17 @@ def get_wallet_info(
     wallet_request: schemas.WalletInfoRequest,
     db: Session = Depends(db_manager.get_session),
 ):
-    """
-    Получить данные по кошельку
-    """
-    wallet_info = tron.get_wallet_info_sync(wallet_request.wallet_address)
+    try:
+        wallet_info = tron.get_wallet_info_sync(wallet_request.wallet_address)
+    except BadAddress:
+        raise HTTPException(status_code=400, detail="Неправильный адрес Tron")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
     if not wallet_info:
-        raise HTTPException(status_code=404, detail="Wallet not found")
+        raise HTTPException(status_code=404, detail=" Кошелек не найден")
 
     crud.create_wallet_query(db, schemas.WalletInfoResponse(**wallet_info))
-
     return wallet_info
 
 

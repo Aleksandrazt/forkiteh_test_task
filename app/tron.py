@@ -25,7 +25,7 @@ def get_wallet_info_sync(wallet_address: str):
         raise TronNetworkNotSetError(
             "Не задана сеть tron в переменной окружения TRON_NETWORK"
         )
-    client = Tron(HTTPProvider(api_key=tron_network))
+    client = Tron(HTTPProvider(endpoint_uri=tron_network))
 
     try:
         account = client.get_account(wallet_address)
